@@ -1,0 +1,90 @@
+.error {
+  position: fixed;
+  z-index: 1001;
+  bottom: 0;
+  right: 0;
+  width: 250px;
+  min-height: 100px;
+  font-size: 18px;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  border-radius: 4px 0 4px 0;
+  transition: all 0.5s ease;
+  animation: fadein 4s forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes fadein {
+  0% {
+    display: block;
+    bottom: -100px;
+    opacity: 0;
+  }
+  40% {
+    bottom: 0;
+    opacity: 1;
+    display: block;
+  }
+  70% {
+    bottom: 0;
+    opacity: 1;
+    display: block;
+  }
+  100% {
+    bottom: 0;
+    opacity: 0;
+    display: none;
+  }
+}
+/* .notification {
+  position: fixed;
+  z-index: 1001;
+  right: 0;
+  width: 250px;
+  height: 50px;
+  box-shadow: 5px rgba(0, 0, 0, 0.7);
+  background-color: #3e708e;
+  border-radius: 4px 0 4px 0;
+  transition: all 0.5s ease;
+  animation: fadein 4s forwards;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notification span {
+  margin-left: 15px;
+}
+.notification button {
+  width: 20px;
+  height: 20px;
+  font-size: 18px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notification button:hover {
+  color: red;
+}
+
+@keyframes fadein {
+  0% {
+    bottom: -50px;
+    opacity: 0;
+  }
+  40% {
+    bottom: 0;
+    opacity: 1;
+  }
+  70% {
+    bottom: 0;
+    opacity: 1;
+  }
+  100% {
+    bottom: 0;
+    opacity: 0;
+  }
+} */

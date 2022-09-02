@@ -1,0 +1,22 @@
+.filter_block {
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #fff;
+  opacity: 0.7;
+}
+.filter_block ul {
+  display: flex;
+}
+.filter_block ul li {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid purple;
+  cursor: pointer;
+}
+.filter_block ul li:hover {
+  background-color: #747abc;
+}
+.active {
+  background-color: #747abc;
+}

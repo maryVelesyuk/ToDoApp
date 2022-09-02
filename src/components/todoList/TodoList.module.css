@@ -1,0 +1,12 @@
+.to_do_list_container {
+  width: 660px;
+  min-height: 400px;
+  background-color: #25273c;
+  position: relative;
+  margin-bottom: 70px;
+}
+.to_do_list {
+  margin-left: 0;
+  padding-left: 0;
+  padding: 10px 10px 0 10px;
+}

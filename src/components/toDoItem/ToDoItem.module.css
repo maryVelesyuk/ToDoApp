@@ -1,0 +1,37 @@
+.to_do_item {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: center;
+  gap: 2px;
+  font-size: 28px;
+}
+.text {
+  width: 80%;
+  border-bottom: 4px solid rgba(72, 64, 64, 0.37);
+}
+.text_completed {
+  width: 80%;
+  border-bottom: 4px solid rgba(72, 64, 64, 0.37);
+  text-decoration: line-through;
+}
+.menu {
+  width: 10%;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+}
+.menu button {
+  cursor: pointer;
+}
+.favorites {
+  /* display: none; */
+  width: 10%;
+  text-align: center;
+}
+.favorites_active {
+  fill: purple;
+  width: 10%;
+  text-align: center;
+}

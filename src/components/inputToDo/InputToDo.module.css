@@ -1,0 +1,48 @@
+label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.input_todo {
+  font-family: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 10px;
+  width: 75%;
+  background-color: #25273c;
+  color: #fff;
+  font-size: 28px;
+  border: none;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.input_todo::placeholder {
+  color: #fff;
+  opacity: 0.7;
+}
+.input_todo:focus {
+  outline: none;
+}
+.add_btn {
+  width: 25%;
+  background-color: #5aff31;
+  color: inherit;
+  border: none;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.add_btn svg {
+  margin: o auto;
+}
+.input_error {
+  width: 100%;
+  color: purple;
+  font-size: 16px;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}

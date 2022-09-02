@@ -1,0 +1,23 @@
+.menu {
+  width: 200px;
+  position: absolute;
+  right: 0;
+  background: #ffffff;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 101;
+  color: black;
+  font-size: 16px;
+}
+.menu ul {
+  overflow: hidden;
+}
+
+.menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+.menu li:hover {
+  color: purple;
+}
