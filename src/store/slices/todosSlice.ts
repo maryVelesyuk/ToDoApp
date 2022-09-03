@@ -147,6 +147,44 @@ export const toggleFavourite = createAsyncThunk<
   }
 });
 
+export const editTodo = createAsyncThunk<
+  Todo,
+  { id: string; text: string },
+  { rejectValue: string; state: { todos: TodosState } }
+>(
+  "todos/editTodo",
+  async function ({ id, text }, { rejectWithValue, getState }) {
+    try {
+      const todo = getState().todos.todos.find((todo) => todo.id === id);
+
+      if (todo) {
+        const response = await fetch(
+          `https://630f75dd37925634189048b9.mockapi.io/todos/${id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              text: text,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Can't edit todo. Server Error");
+        }
+
+        return (await response.json()) as Todo;
+      }
+      throw new Error("No such todo in state");
+    } catch (error: any) {
+      //исправить error
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export type Todo = {
   id: string;
   text: string;
@@ -168,20 +206,7 @@ const initialState: TodosState = {
 const todosSlice = createSlice({
   name: "todos",
   initialState,
-  reducers: {
-    // toggleFavourite(state, action: PayloadAction<string>) {
-    //   const todo = state.todos.find((todo) => todo.id === action.payload);
-    //   if (todo) {
-    //     todo.isFavourite = !todo.isFavourite;
-    //   }
-    // },
-    // toggleCompleted(state, action: PayloadAction<string>) {
-    //   const todo = state.todos.find((todo) => todo.id === action.payload);
-    //   if (todo) {
-    //     todo.isCompleted = !todo.isCompleted;
-    //   }
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodos.pending, (state) => {
@@ -251,10 +276,20 @@ const todosSlice = createSlice({
       .addCase(toggleFavourite.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(editTodo.fulfilled, (state, action) => {
+        const editTodo = state.todos.find(
+          (todo) => todo.id === action.payload.id
+        );
+        if (editTodo) {
+          editTodo.text = action.payload.text;
+        }
+      })
+      .addCase(editTodo.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
-
-// export const { toggleFavourite, toggleCompleted } = todosSlice.actions;
 
 export default todosSlice.reducer;

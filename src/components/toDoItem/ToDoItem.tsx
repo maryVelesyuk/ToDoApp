@@ -3,6 +3,8 @@ import { useAppDispatch } from "../../hooks/hook";
 import {
   toggleFavourite,
   toggleCompleted,
+  editTodo,
+  deleteTodo,
 } from "../../store/slices/todosSlice";
 import SvgIcons from "../icons/SvgIcons";
 import { Menu } from "../menu/Menu";
@@ -26,6 +28,8 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
   isFavourite,
   isCompleted,
 }) => {
+  const [isEditActive, setIsEditActive] = useState(false);
+  const [inputEditValue, setInputEditValue] = useState(text);
   const [isMenuActive, setIsMenuActive] = useState(false);
   const [isModalActive, setIsModalActive] = useState(false);
   const dispatch = useAppDispatch();
@@ -48,7 +52,24 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
     switchModalActive();
   };
 
-  const editTodo = (id: string) => {};
+  const editTodoBtn = (id: string) => {
+    setIsMenuActive(false);
+    setIsEditActive(true);
+  };
+
+  const handleInputEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputEditValue(e.target.value);
+  };
+  const handeInputEditKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      setIsEditActive(false);
+      if (inputEditValue.trim()) {
+        dispatch(editTodo({ id: id, text: inputEditValue }));
+      } else {
+        dispatch(deleteTodo(id));
+      }
+    }
+  };
   ///код из интернета, чтобы по клику вне закрывалось меню.
   //Добавила, чтобы быстрее сделать дз. потом посмотрю как лучше сделать
   useEffect(() => {
@@ -64,12 +85,23 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
 
   return (
     <li className={s.to_do_item}>
-      <div
-        className={isCompleted ? s.text_completed : s.text}
-        onClick={() => switchCompleted(id)}
-      >
-        {text}
-      </div>
+      {isEditActive ? (
+        <input
+          type="text"
+          onChange={(e) => handleInputEditChange(e)}
+          onKeyPress={(e) => handeInputEditKeyPress(e)}
+          className={s.text_edit}
+          defaultValue={text}
+          autoFocus
+        />
+      ) : (
+        <div
+          className={isCompleted ? s.text_completed : s.text}
+          onClick={() => switchCompleted(id)}
+        >
+          {text}
+        </div>
+      )}
       <div
         className={isFavourite ? s.favorites_active : s.favorites}
         onClick={() => switchFavourite(id)}
@@ -89,7 +121,7 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
             isCompleted={isCompleted}
             switchCompleted={switchCompleted}
             deleteItem={deleteItem}
-            editTodo={editTodo}
+            editTodo={editTodoBtn}
           />
         )}
         {isModalActive && (
