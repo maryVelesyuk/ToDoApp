@@ -35,20 +35,22 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
   const dispatch = useAppDispatch();
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const toggleMenuActive = () => {
-    setIsMenuActive(!isMenuActive);
+  const openMenu = () => {
+    setIsMenuActive(true);
   };
   const switchModalActive = () => {
     setIsModalActive(!isModalActive);
   };
   const switchCompleted = (id: string) => {
     dispatch(toggleCompleted(id));
+    setIsMenuActive(false);
   };
   const switchFavourite = (id: string) => {
     dispatch(toggleFavourite(id));
+    setIsMenuActive(false);
   };
   const deleteItem = () => {
-    toggleMenuActive();
+    setIsMenuActive(false);
     switchModalActive();
   };
 
@@ -110,7 +112,7 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
       </div>
 
       <div className={s.menu} ref={menuRef}>
-        <button onClick={toggleMenuActive}>
+        <button onClick={openMenu}>
           <SvgIcons id="menu" />
         </button>
         {isMenuActive && (

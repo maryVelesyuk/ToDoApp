@@ -4,10 +4,7 @@ import s from "./FilterBlock.module.css";
 //const filters = ['все', "выполненные задачи", "задачи в работе", "избранные задачи"];
 
 interface FilterBlockProps {
-  filterCompletedTodos: () => void;
-  filterFavouriteTodos: () => void;
-  filterInProgressTodos: () => void;
-  filterAllTodos: () => void;
+  filterTodos: (filter: string) => void;
   isFilterActive: {
     all: boolean;
     completed: boolean;
@@ -17,35 +14,32 @@ interface FilterBlockProps {
 }
 
 export const FilterBlock: React.FC<FilterBlockProps> = ({
-  filterCompletedTodos,
-  filterFavouriteTodos,
-  filterInProgressTodos,
-  filterAllTodos,
+  filterTodos,
   isFilterActive,
 }) => {
   return (
     <div className={s.filter_block}>
       <ul>
         <li
-          onClick={filterAllTodos}
+          onClick={() => filterTodos("all")}
           className={isFilterActive.all ? s.active : null}
         >
           все
         </li>
         <li
-          onClick={filterCompletedTodos}
+          onClick={() => filterTodos("completed")}
           className={isFilterActive.completed ? s.active : null}
         >
           выполненные задачи
         </li>
         <li
-          onClick={filterInProgressTodos}
+          onClick={() => filterTodos("inProgress")}
           className={isFilterActive.inProgress ? s.active : null}
         >
           задачи в работе
         </li>
         <li
-          onClick={filterFavouriteTodos}
+          onClick={() => filterTodos("favourite")}
           className={isFilterActive.favourite ? s.active : null}
         >
           избранные задачи

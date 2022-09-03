@@ -39,9 +39,11 @@
   /* display: none; */
   width: 10%;
   text-align: center;
+  cursor: pointer;
 }
 .favorites_active {
   fill: purple;
   width: 10%;
   text-align: center;
+  cursor: pointer;
 }

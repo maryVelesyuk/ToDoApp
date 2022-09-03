@@ -27,44 +27,49 @@ function App() {
     setFiltredTodos(todos);
   }, [todos]);
 
-  const filterCompletedTodos = () => {
-    setFiltredTodos(todos.filter((todo) => todo.isCompleted === true));
-    setIsFilterActive({
-      all: false,
-      completed: true,
-      favourite: false,
-      inProgress: false,
-    });
-  };
+  const filterTodos = (filter: string) => {
+    switch (filter) {
+      case "all":
+        setFiltredTodos(todos);
+        setIsFilterActive({
+          all: true,
+          completed: false,
+          favourite: false,
+          inProgress: false,
+        });
 
-  const filterFavouriteTodos = () => {
-    setFiltredTodos(todos.filter((todo) => todo.isFavourite === true));
-    setIsFilterActive({
-      all: false,
-      completed: false,
-      favourite: true,
-      inProgress: false,
-    });
-  };
-
-  const filterInProgressTodos = () => {
-    setFiltredTodos(todos.filter((todo) => todo.isCompleted !== true));
-    setIsFilterActive({
-      all: false,
-      completed: false,
-      favourite: false,
-      inProgress: true,
-    });
-  };
-
-  const filterAllTodos = () => {
-    setFiltredTodos(todos);
-    setIsFilterActive({
-      all: true,
-      completed: false,
-      favourite: false,
-      inProgress: false,
-    });
+        break;
+      case "completed":
+        setFiltredTodos(todos.filter((todo) => todo.isCompleted === true));
+        setIsFilterActive({
+          all: false,
+          completed: true,
+          favourite: false,
+          inProgress: false,
+        });
+        break;
+      case "favourite":
+        setFiltredTodos(todos.filter((todo) => todo.isFavourite === true));
+        setIsFilterActive({
+          all: false,
+          completed: false,
+          favourite: true,
+          inProgress: false,
+        });
+        break;
+      case "inProgress":
+        setFiltredTodos(todos.filter((todo) => todo.isCompleted !== true));
+        setIsFilterActive({
+          all: false,
+          completed: false,
+          favourite: false,
+          inProgress: true,
+        });
+        break;
+      default:
+        setFiltredTodos(todos);
+        break;
+    }
   };
 
   return (
@@ -73,10 +78,7 @@ function App() {
       <main>
         <InputToDo />
         <FilterBlock
-          filterCompletedTodos={filterCompletedTodos}
-          filterFavouriteTodos={filterFavouriteTodos}
-          filterInProgressTodos={filterInProgressTodos}
-          filterAllTodos={filterAllTodos}
+          filterTodos={filterTodos}
           isFilterActive={isFilterActive}
         />
         <TodoList todos={filtredTodos} />
