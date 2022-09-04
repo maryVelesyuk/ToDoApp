@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useAppDispatch } from "../../hooks/hook";
+import { useAppDispatch, useAppSelector } from "../../hooks/hook";
 import {
   toggleFavourite,
   toggleCompleted,
@@ -9,6 +9,7 @@ import {
 import SvgIcons from "../icons/SvgIcons";
 import { Menu } from "../menu/Menu";
 import { Modal } from "../modal/Modal";
+import Spinner from "../spinner/Spinner";
 import s from "./ToDoItem.module.css";
 
 interface ToDoItemProps {
