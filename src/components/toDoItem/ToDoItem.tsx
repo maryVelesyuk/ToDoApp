@@ -15,6 +15,7 @@ import s from "./ToDoItem.module.css";
 interface ToDoItemProps {
   id: string;
   text: string;
+  date: number;
   isFavourite: boolean;
   isCompleted: boolean;
 }
@@ -26,6 +27,7 @@ type PopupClick = MouseEvent & {
 const ToDoItem: React.FC<ToDoItemProps> = ({
   id,
   text,
+  date,
   isFavourite,
   isCompleted,
 }) => {
@@ -128,7 +130,12 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
           />
         )}
         {isModalActive && (
-          <Modal id={id} text={text} switchModalActive={switchModalActive} />
+          <Modal
+            id={id}
+            text={text}
+            date={date}
+            switchModalActive={switchModalActive}
+          />
         )}
       </div>
     </li>

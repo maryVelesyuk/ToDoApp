@@ -7,12 +7,14 @@ import s from "./Modal.module.css";
 interface ModalProps {
   text: string;
   id: string;
+  date: number;
   switchModalActive: () => void;
 }
 
 export const Modal: React.FC<ModalProps> = ({
   id,
   text,
+  date,
   switchModalActive,
 }) => {
   const dispatch = useAppDispatch();
@@ -27,6 +29,9 @@ export const Modal: React.FC<ModalProps> = ({
       <div className={s.modal_field} onClick={(e) => e.stopPropagation()}>
         <div>Вы действительно хотите удалить эту задачу?</div>
         <div className={s.todo_text}>{text}</div>
+        <div className={s.todo_date}>{`${new Date(date).getDate()}-${
+          new Date(date).getMonth() + 1
+        }-${new Date(date).getFullYear()}`}</div>
         <div className={s.btns_block}>
           <button onClick={switchModalActive}>Отмена</button>
           <button onClick={() => removeTodo(id)}>Удалить</button>

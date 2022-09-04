@@ -38,6 +38,7 @@ export const addNewTodo = createAsyncThunk<
           text: text,
           isFavourite: false,
           isCompleted: false,
+          date: Date.now(),
         }),
       }
     );
@@ -187,6 +188,7 @@ export type Todo = {
   text: string;
   isFavourite: boolean;
   isCompleted: boolean;
+  date: number;
 };
 
 type TodosState = {

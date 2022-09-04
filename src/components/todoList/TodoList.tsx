@@ -10,7 +10,6 @@ interface TodoListProps {
 
 const TodoList: React.FC<TodoListProps> = ({ todos }) => {
   const { loading } = useAppSelector((state) => state.todos);
-
   if (loading) return <Spinner />;
 
   return (
