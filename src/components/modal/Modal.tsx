@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppDispatch } from "../../hooks/hook";
 import { deleteTodo } from "../../store/slices/todosSlice";
+import { convertDate } from "../../utilits/convertDate";
 import SvgIcons from "../icons/SvgIcons";
 import s from "./Modal.module.css";
 
@@ -29,9 +30,7 @@ export const Modal: React.FC<ModalProps> = ({
       <div className={s.modal_field} onClick={(e) => e.stopPropagation()}>
         <div>Вы действительно хотите удалить эту задачу?</div>
         <div className={s.todo_text}>{text}</div>
-        <div className={s.todo_date}>{`${new Date(date).getDate()}-${
-          new Date(date).getMonth() + 1
-        }-${new Date(date).getFullYear()}`}</div>
+        <div className={s.todo_date}>Дата создания: {convertDate(date)}</div>
         <div className={s.btns_block}>
           <button onClick={switchModalActive}>Отмена</button>
           <button onClick={() => removeTodo(id)}>Удалить</button>
