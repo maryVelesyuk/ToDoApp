@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# ToDo App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This ToDo App is created on React using TypeScript. Redux Toolkit was used to work with the global state. 
 
 ## Available Scripts
 
