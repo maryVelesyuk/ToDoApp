@@ -2,7 +2,7 @@ import React from "react";
 import s from "./Error.module.css";
 
 interface ErrorProps {
-  error: string;
+  error: string | null | undefined;
 }
 
 export const Error: React.FC<ErrorProps> = ({ error }) => {

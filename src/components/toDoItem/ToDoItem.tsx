@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/hook";
+import { useAppDispatch } from "../../hooks/hook";
 import {
   toggleFavourite,
   toggleCompleted,
@@ -9,7 +9,6 @@ import {
 import SvgIcons from "../icons/SvgIcons";
 import { Menu } from "../menu/Menu";
 import { Modal } from "../modal/Modal";
-import Spinner from "../spinner/Spinner";
 import s from "./ToDoItem.module.css";
 
 interface ToDoItemProps {
@@ -75,8 +74,7 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
       }
     }
   };
-  ///код из интернета, чтобы по клику вне закрывалось меню.
-  //Добавила, чтобы быстрее сделать дз. потом посмотрю как лучше сделать
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const _event = event as PopupClick;

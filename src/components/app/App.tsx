@@ -7,11 +7,29 @@ import InputToDo from "../inputToDo/InputToDo";
 import TodoList from "../todoList/TodoList";
 import { Error } from "../error/Error";
 import "./App.css";
+import { AppSpinner } from "../appSpinner/AppSpinner";
 
 function App() {
   const dispatch = useAppDispatch();
-  const { todos, error } = useAppSelector((state) => state.todos);
+
+  const {
+    todos,
+    loadingFetchTodos,
+    loadingAddNewTodo,
+    loadinEditTodo,
+    loadingDeleteTodo,
+    loadingToggleCompleted,
+    loadingToggleFavourite,
+    errorFetchTodos,
+    errorAddNewTodo,
+    errorDeleteTodo,
+    errorEditTodo,
+    errorToggleCompleted,
+    errorToggleFavourite,
+  } = useAppSelector((state) => state.todos);
+
   const [filtredTodos, setFiltredTodos] = useState(todos);
+
   const [isFilterActive, setIsFilterActive] = useState({
     all: true,
     completed: false,
@@ -72,6 +90,22 @@ function App() {
     }
   };
 
+  const loading =
+    loadinEditTodo ||
+    loadingAddNewTodo ||
+    loadingDeleteTodo ||
+    loadingFetchTodos ||
+    loadingToggleCompleted ||
+    loadingToggleFavourite;
+
+  const error =
+    errorAddNewTodo ||
+    errorDeleteTodo ||
+    errorEditTodo ||
+    errorFetchTodos ||
+    errorToggleCompleted ||
+    errorToggleFavourite;
+
   return (
     <div className="app">
       <Header />
@@ -83,6 +117,7 @@ function App() {
         />
         <TodoList todos={filtredTodos} />
         {error && <Error error={error} />}
+        {loading && <AppSpinner />}
       </main>
     </div>
   );

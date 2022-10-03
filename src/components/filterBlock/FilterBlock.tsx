@@ -1,8 +1,6 @@
 import React from "react";
 import s from "./FilterBlock.module.css";
 
-//const filters = ['все', "выполненные задачи", "задачи в работе", "избранные задачи"];
-
 interface FilterBlockProps {
   filterTodos: (filter: string) => void;
   isFilterActive: {

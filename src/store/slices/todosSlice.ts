@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchTodos = createAsyncThunk<
   Todo[],
@@ -48,7 +48,6 @@ export const addNewTodo = createAsyncThunk<
     }
 
     return (await response.json()) as Todo;
-    //исправить error
   } catch (error: any) {
     return rejectWithValue(error.message);
   }
@@ -177,7 +176,6 @@ export const editTodo = createAsyncThunk<
       }
       throw new Error("No such todo in state");
     } catch (error: any) {
-      //исправить error
       return rejectWithValue(error.message);
     }
   }
@@ -193,17 +191,34 @@ export type Todo = {
 
 type TodosState = {
   todos: Todo[];
-  loading: boolean;
-  error: null | string | undefined;
+  loadingFetchTodos: boolean;
+  errorFetchTodos: null | string | undefined;
+  loadingAddNewTodo: boolean;
+  loadingDeleteTodo: boolean;
+  loadingToggleCompleted: boolean;
+  loadingToggleFavourite: boolean;
+  loadinEditTodo: boolean;
+  errorAddNewTodo: null | string | undefined;
+  errorDeleteTodo: null | string | undefined;
+  errorToggleCompleted: null | string | undefined;
+  errorToggleFavourite: null | string | undefined;
+  errorEditTodo: null | string | undefined;
 };
 
-//???Для каждой асинхронной операции нужно отдельный loading и error добавлять?
-//если да, то у меня экстраредусеры неправильно описаны, я их закоментила.
-//только для fetchTodos обрабатываю loading и error
 const initialState: TodosState = {
   todos: [],
-  loading: false,
-  error: null,
+  loadingFetchTodos: false,
+  errorFetchTodos: null,
+  loadingAddNewTodo: false,
+  errorAddNewTodo: null,
+  loadingDeleteTodo: false,
+  errorDeleteTodo: null,
+  loadingToggleCompleted: false,
+  errorToggleCompleted: null,
+  loadingToggleFavourite: false,
+  errorToggleFavourite: null,
+  loadinEditTodo: false,
+  errorEditTodo: null,
 };
 
 const todosSlice = createSlice({
@@ -213,45 +228,45 @@ const todosSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodos.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.loadingFetchTodos = true;
+        state.errorFetchTodos = null;
       })
       .addCase(fetchTodos.fulfilled, (state, action) => {
         state.todos = action.payload;
-        state.loading = false;
+        state.loadingFetchTodos = false;
       })
       .addCase(fetchTodos.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+        state.loadingFetchTodos = false;
+        state.errorFetchTodos = action.payload;
       })
-      // .addCase(addNewTodo.pending, (state) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
+      .addCase(addNewTodo.pending, (state) => {
+        state.loadingAddNewTodo = true;
+        state.errorAddNewTodo = null;
+      })
       .addCase(addNewTodo.fulfilled, (state, action) => {
         state.todos.push(action.payload);
-        //state.loading = false;
+        state.loadingAddNewTodo = false;
       })
-      // .addCase(addNewTodo.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload;
-      // })
-      // .addCase(deleteTodo.pending, (state) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
+      .addCase(addNewTodo.rejected, (state, action) => {
+        state.loadingAddNewTodo = false;
+        state.errorAddNewTodo = action.payload;
+      })
+      .addCase(deleteTodo.pending, (state) => {
+        state.loadingDeleteTodo = true;
+        state.errorDeleteTodo = null;
+      })
       .addCase(deleteTodo.fulfilled, (state, action) => {
         state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-        //state.loading = false;
+        state.loadingDeleteTodo = false;
       })
-      // .addCase(deleteTodo.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload;
-      // })
-      // .addCase(toggleCompleted.pending, (state) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
+      .addCase(deleteTodo.rejected, (state, action) => {
+        state.loadingDeleteTodo = false;
+        state.errorDeleteTodo = action.payload;
+      })
+      .addCase(toggleCompleted.pending, (state) => {
+        state.loadingToggleCompleted = true;
+        state.errorToggleCompleted = null;
+      })
       .addCase(toggleCompleted.fulfilled, (state, action) => {
         const toggledTodo = state.todos.find(
           (todo) => todo.id === action.payload.id
@@ -259,15 +274,16 @@ const todosSlice = createSlice({
         if (toggledTodo) {
           toggledTodo.isCompleted = !toggledTodo.isCompleted;
         }
+        state.loadingToggleCompleted = false;
       })
-      // .addCase(toggleCompleted.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload;
-      // })
-      // .addCase(toggleFavourite.pending, (state) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
+      .addCase(toggleCompleted.rejected, (state, action) => {
+        state.loadingToggleCompleted = false;
+        state.errorToggleCompleted = action.payload;
+      })
+      .addCase(toggleFavourite.pending, (state) => {
+        state.loadingToggleFavourite = true;
+        state.errorToggleFavourite = null;
+      })
       .addCase(toggleFavourite.fulfilled, (state, action) => {
         const toggledTodo = state.todos.find(
           (todo) => todo.id === action.payload.id
@@ -275,15 +291,16 @@ const todosSlice = createSlice({
         if (toggledTodo) {
           toggledTodo.isFavourite = !toggledTodo.isFavourite;
         }
+        state.loadingToggleFavourite = false;
       })
-      // .addCase(toggleFavourite.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload;
-      // })
-      // .addCase(editTodo.pending, (state) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
+      .addCase(toggleFavourite.rejected, (state, action) => {
+        state.loadingToggleFavourite = false;
+        state.errorToggleFavourite = action.payload;
+      })
+      .addCase(editTodo.pending, (state) => {
+        state.loadinEditTodo = true;
+        state.errorEditTodo = null;
+      })
       .addCase(editTodo.fulfilled, (state, action) => {
         const editTodo = state.todos.find(
           (todo) => todo.id === action.payload.id
@@ -291,11 +308,12 @@ const todosSlice = createSlice({
         if (editTodo) {
           editTodo.text = action.payload.text;
         }
+        state.loadinEditTodo = false;
+      })
+      .addCase(editTodo.rejected, (state, action) => {
+        state.loadinEditTodo = false;
+        state.errorEditTodo = action.payload;
       });
-    // .addCase(editTodo.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload;
-    // });
   },
 });
 

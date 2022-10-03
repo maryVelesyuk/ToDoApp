@@ -22,8 +22,10 @@ const InputToDo: React.FC = () => {
   }, [inputText]);
 
   const addTodoBtn = (text: string) => {
-    dispatch(addNewTodo(text));
-    setInputText("");
+    if (!inputError) {
+      dispatch(addNewTodo(text));
+      setInputText("");
+    }
   };
 
   return (
